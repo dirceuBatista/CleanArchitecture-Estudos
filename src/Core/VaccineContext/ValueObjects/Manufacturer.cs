@@ -33,6 +33,11 @@ public sealed record Manufacturer : ValueObject
     
     #region Operators
 
+    public static implicit operator Manufacturer(string enterprise)
+    {
+        return new Manufacturer(enterprise);
+    }
+       
     public static implicit operator string(Manufacturer manufacturer)
         => manufacturer.ToString();
 

@@ -13,9 +13,13 @@ public class VaccineCard : Entity
     public string UserSusNumber { get; set; }
     public string UserCpf { get; set; }
     public Guid UserId { get; set; }
+    
     [JsonIgnore]
     public User user { get; set; }
+    
+    [JsonIgnore]
     public string VaccineNamesSerialized { get; set; }
+    
     private List<string> _vaccineNameCache;
 
     [NotMapped]

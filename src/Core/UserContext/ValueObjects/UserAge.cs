@@ -47,6 +47,5 @@ public sealed record UserAge : ValueObject
         if (age < MinLength || age > MaxLength)
             throw new AgeInvalidLengthException(ErrorMessage.Age.InvalidLength);
     }
-
     #endregion
 }

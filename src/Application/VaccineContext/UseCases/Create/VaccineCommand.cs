@@ -6,11 +6,7 @@ using MediatR;
 namespace Application.VaccineContext.UseCases.Create;
 
 public sealed record VaccineCommand(
-    VaccineName vaccineName,
-    Manufacturer manufacturer,
-    VaccineCategory categoryType,
-    VaccineDose doseType,
-    int? minimumAgeInMonths,
-    bool isMandatory, string index) : ICommand<VaccineResponse>;
+    string VaccineName, string Manufacturer, VaccineCategory CategoryType, VaccineDose DoseType, int? MinimumAgeInMonths, bool IsMandatory, string Index) 
+    : ICommand<VaccineResponse>;
 
     

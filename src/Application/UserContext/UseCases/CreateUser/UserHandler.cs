@@ -4,8 +4,7 @@ using Application.SharedContext.UseCases.Create;
 using Application.UserContext.Repositories.Abstractions;
 using Core.UserContext.Entities;
 using Core.UserContext.ValueObjects;
-using Core.VaccineCardContext.Entities;
-using MediatR;
+
 
 namespace Application.UserContext.UseCases.CreateUser;
 
@@ -13,32 +12,36 @@ public class UserHandler(IUserRepository repository, IUnitOfWork unitOfWork) : I
 {
     public async Task<Result<UserResponse>> Handle(UserCommand request, CancellationToken cancellationToken)
     {
-        var exists = await repository.CpfExistAsync(request.email);
+        var exists = await repository.EmailExistAsync(request.Email);
         if (exists)
-            return Result.Failure<UserResponse>(new Error("",""));
+            return Result.Failure<UserResponse>(new Error("409","O Email jA esta cadastrado"));
         
-        var name = UserName.Create(request.name, request.name);
-        var email = UserEmail.Create(request.email);
-        var password = request.password;
-        var cpf = UserCpf.Create(request.cpf);
-        var age = UserAge.Create(request.age);
-        var gender = UserGender.Create(request.gender);
-        bool hasAllergy = !string.IsNullOrWhiteSpace(request.allergy?.Description);
-        var allergy = UserAllergy.Create(hasAllergy, request.allergy?.Description ?? string.Empty);
-        var sus = string.IsNullOrWhiteSpace(request.susNumber)
-            ? null
-            : UserSusNumber.Create(request.susNumber);
+        var name = UserName.Create(request.FirstName,request.LastName);
+        var email = UserEmail.Create(request.Email);
+        var password = request.Password;
+        var cpf = UserCpf.Create(request.Cpf);
+        var age = UserAge.Create(request.Age);                                  
+        var gender = UserGender.Create(request.Gender);
+        var allergy = UserAllergy.Create(request.Allergy);
+        var sus = UserSusNumber.Create(request.SusNumber);
         
 
         var user = User.Create(name, email, password, age, allergy, gender, cpf, sus);
         
-        
-        await repository.SaveAsync(user);
-        await unitOfWork.CommitAsync();
+        try
+        {
 
-        var responser = new UserResponse
-        (user.Name);
-        
-        return Result.Success(responser);
+            await repository.SaveAsync(user);
+            await unitOfWork.CommitAsync();
+
+            var responser = new UserResponse
+                (user.Name);
+
+            return Result.Success(responser);
+        }
+        catch (Exception)
+        {
+            return Result.Failure<UserResponse>(new Error("500", "Erro interno no servidor."));
+        }
     }
 }

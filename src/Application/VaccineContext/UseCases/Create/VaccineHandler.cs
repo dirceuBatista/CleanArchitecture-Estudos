@@ -13,28 +13,34 @@ public class VaccineHandler(IVaccineRepository repository, IUnitOfWork unitOfWor
     public async Task<Result<VaccineResponse>> Handle(VaccineCommand request, CancellationToken cancellationToken)
     {
         
-        var exists = await repository.VaccineExistAsync(request.index);
+        var exists = await repository.VaccineExistAsync(request.Index);
         if(exists)
-            return Result.Failure<VaccineResponse>(new Error("404", " dale"));
+            return Result.Failure<VaccineResponse>(new Error("409", "Vacina ja cadastrada"));
         
-        var name = VaccineName.Create(request.vaccineName);
-        var manufacture = Manufacturer.Create(request.manufacturer);
-        var category = request.categoryType;  
-        var dose = request.doseType;           
-        var isMandatory = request.isMandatory;
-        var index = request.index;
-        var minAge = request.minimumAgeInMonths;
-        
+        var name = VaccineName.Create(request.VaccineName);
+        var manufacture = Manufacturer.Create(request.Manufacturer);
+        var category = request.CategoryType;  
+        var dose = request.DoseType;           
+        var isMandatory = request.IsMandatory;
+        var index = request.Index;
+        var minAge = request.MinimumAgeInMonths;
         
         
         var vaccine = Vaccine.Create(name, manufacture, category, dose, minAge, isMandatory, index);
         
-        await repository.SaveAsync(vaccine);
-        await unitOfWork.CommitAsync();
+        try
+        {
+            await repository.SaveAsync(vaccine);
+            await unitOfWork.CommitAsync();
 
-        var responser = new VaccineResponse
-            (vaccine.vacciName);
-        
-        return Result.Success(responser);
+            var responser = new VaccineResponse
+                (vaccine.VacciName);
+
+            return Result.Success(responser);
+        }
+        catch (Exception )
+        {
+            return Result.Failure<VaccineResponse>(new Error("500", "Erro interno no servidor."));
+        }
     }
 }

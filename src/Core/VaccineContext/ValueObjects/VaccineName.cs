@@ -37,12 +37,9 @@ public sealed record VaccineName : ValueObject
 
     public static VaccineName Create(string name)
     {
-        
         name = name.Trim();
         Validate(name);
         return new VaccineName(name);
-
-
     }
 
     #endregion
@@ -62,7 +59,8 @@ public sealed record VaccineName : ValueObject
     #endregion
 
     #region Operators
-
+    public static implicit operator VaccineName(string name)
+        =>new VaccineName(name);
     public static implicit operator string(VaccineName name)
         =>name.ToString();
     

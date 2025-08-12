@@ -18,6 +18,7 @@ public class VaccineCardController(IMediator mediator) : ControllerBase
             return BadRequest(response.Error);
         return Ok(response);
     }
+    
     [HttpGet("v1/vaccineCards/{id}")]
     public async Task<ActionResult<Result<VaccineCardQueryResponse>>> Create(Guid id,CancellationToken cancellationToken)
     {

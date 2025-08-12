@@ -10,13 +10,13 @@ namespace Core.VaccineContext.Entities;
 
 public class Vaccine : Entity
 {
-    public VaccineName vacciName { get;  }
-    public Manufacturer Manufacturer { get;  }  // Ex: "Butantan", "Pfizer"
-    public VaccineCategory CategoryType { get;  }      // Ex: "Infantil", "Adulto"
-    public VaccineDose DoseType { get;  }      // Ex: "1ª Dose", "Reforço"
-    public int? MinimumAgeInMonths { get;  }
+    public VaccineName VacciName { get;  }
+    public Manufacturer Manufacturer { get;  } 
+    public VaccineCategory CategoryType { get; }     
+    public VaccineDose DoseType { get; }      
+    public int? MinimumAgeInMonths { get; }
     public bool IsMandatory { get;  }
-    public string Index { get; }
+    public string  Index { get; }
     
 
     #region Constructors
@@ -28,7 +28,7 @@ public class Vaccine : Entity
     [JsonConstructor]
     private Vaccine(VaccineName name, Manufacturer manufacturer, VaccineCategory category,VaccineDose dose , int? minimumAgeInMonths, bool isMandatory , string index) : base(Guid.NewGuid())
     {
-        vacciName = name;
+        VacciName = name;
         Manufacturer = manufacturer;
         CategoryType = category;
         DoseType = dose;

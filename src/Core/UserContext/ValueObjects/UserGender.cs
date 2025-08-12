@@ -7,7 +7,6 @@ namespace Core.UserContext.ValueObjects;
 
 public sealed record UserGender : ValueObject
 {
-    
     public string Value { get; }
 
     #region Constante

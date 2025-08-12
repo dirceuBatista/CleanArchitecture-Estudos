@@ -4,4 +4,4 @@ using Core.VaccineContext.ValueObjects;
 
 namespace Application.VaccineCardContext.UseCases.Update;
 
-public record VaccineCardCommand(Guid CardId, Guid VaccineId): ICommand<VaccineCardResponse>;
+public sealed record VaccineCardCommand(Guid CardId, Guid VaccineId): ICommand<VaccineCardResponse>;

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SqlServer");
 builder.Services.AddDbContext<AppDbContext>(x => x.UseSqlServer
-    (connectionString, x=>x.MigrationsAssembly("Api")));
+    (connectionString, b=>b.MigrationsAssembly("Api")));
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
 

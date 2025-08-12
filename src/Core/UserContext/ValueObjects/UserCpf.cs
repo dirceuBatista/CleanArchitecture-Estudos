@@ -91,7 +91,7 @@ public sealed record UserCpf : ValueObject
     }
     public static implicit operator string (UserCpf cpf)
     {
-        return cpf.NumberCpf;
+        return cpf.ToString();
     }
     #endregion
 

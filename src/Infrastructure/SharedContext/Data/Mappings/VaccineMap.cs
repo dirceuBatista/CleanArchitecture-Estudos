@@ -15,7 +15,7 @@ public class VaccineMap : IEntityTypeConfiguration<Vaccine>
             .HasName("PK_Vaccine");
         
         
-        builder.OwnsOne(x => x.vacciName, name =>
+        builder.OwnsOne(x => x.VacciName, name =>
         {
             name.Property(x => x.Name)
                 .HasColumnType("NVARCHAR")

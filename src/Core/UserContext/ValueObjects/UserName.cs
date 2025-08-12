@@ -40,8 +40,6 @@ public record UserName : ValueObject
         lastName = lastName.Trim();
         Validate(firstName,lastName);
         return new UserName(firstName, lastName);
-
-
     }
 
     #endregion
@@ -60,8 +58,6 @@ public record UserName : ValueObject
         if (lastName.Length < MinLength || lastName.Length > MaxLength)
             throw new NameNullOrEmptyException(ErrorMessage.Name.InvalidLength);
 
-       
-
     }
 
     #endregion
@@ -70,8 +66,23 @@ public record UserName : ValueObject
 
     public static implicit operator string(UserName name)
         =>name.ToString();
+
+    public static implicit operator UserName(string fullName)
+    {
+        if (string.IsNullOrWhiteSpace(fullName))
+            throw new NameNullOrEmptyException(ErrorMessage.Name.InvalidNullOrEmpty);
+        
+        var parts = fullName.Trim().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        
+        var firstName = parts.FirstOrDefault() ?? string.Empty;
+        
+        var lastName = parts.Length > 1 
+            ? string.Join(' ', parts.Skip(1)) 
+            : string.Empty;
+
+        return  UserName.Create(firstName, lastName);
+    }
     
- 
 
     #endregion
 

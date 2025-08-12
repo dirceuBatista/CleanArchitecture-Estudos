@@ -10,10 +10,17 @@ public class VaccineCardQueryHandler(IVaccineCardRepository repository) : IQuery
     {
         var card = await repository.GetByIdAndVaccine(request.Id);
         if (card is null)
-            return Result.Failure<VaccineCardQueryResponse>(new Error("404", "nao encontrado"));
+            return Result.Failure<VaccineCardQueryResponse>(new Error("404", "Cartão de vacina nao encontrado"));
 
-        var response = new VaccineCardQueryResponse(card.UserName ,card.VaccineName);
-        return Result.Success(response);
+        try
+        {
+            var response = new VaccineCardQueryResponse(card.UserName, card.VaccineName);
+            return Result.Success(response);
+        }
+        catch (Exception )
+        {
+            return Result.Failure<VaccineCardQueryResponse>(new Error("500", "Erro interno no servidor."));
+        }
     
     }
 }

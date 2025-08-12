@@ -8,7 +8,7 @@ namespace Core.UserContext.ValueObjects;
 
 public sealed record UserSusNumber : ValueObject
 {
-    public string NumberSus { get; private set; }
+    public string? NumberSus { get; }
 
     #region Constants
 
@@ -32,9 +32,9 @@ public sealed record UserSusNumber : ValueObject
 
     #region Factory
 
-    public static UserSusNumber Create(string numberSus)
+    public static UserSusNumber Create(string? numberSus)
     {
-        numberSus = numberSus.ToNumbers();
+        numberSus = numberSus?.ToNumbers() ?? String.Empty;
         Validator(numberSus);
         return new UserSusNumber(numberSus);
     }
@@ -78,9 +78,9 @@ public sealed record UserSusNumber : ValueObject
     {
         return Create(susNumber);
     }
-    public static implicit operator string (UserSusNumber number)
+    public static implicit operator string (UserSusNumber? number)
     {
-        return number?.NumberSus;
+        return number?.NumberSus ?? string.Empty;
     }
     #endregion
 
@@ -88,7 +88,7 @@ public sealed record UserSusNumber : ValueObject
 
     public override string ToString()
     {
-        return NumberSus;
+        return NumberSus ?? String.Empty;
     }
 
     #endregion

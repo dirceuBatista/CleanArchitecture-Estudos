@@ -2,11 +2,10 @@ namespace Core.VaccineContext.Errors;
 
 public class ErrorMessageVaccine
 {
-    public static  NameErrorMessage VaccineName { get; }
-    public static ManufacturerErrorMessage Manufacturer { get;  }
-    
-    public static VaccineCategoryErrorMessage VaccineCategory { get;  }
-    public static VaccineDoseErrorMessage VaccineDose { get;  }
+    public static NameErrorMessage VaccineName { get; } = new();
+    public static ManufacturerErrorMessage Manufacturer { get; }= new();
+    public static VaccineCategoryErrorMessage VaccineCategory { get; }= new();
+    public static VaccineDoseErrorMessage VaccineDose { get; }= new();
     public class NameErrorMessage
     {
         public string Invalid { get; set; } = "O Nome informado é inválido.";
@@ -20,7 +19,7 @@ public class ErrorMessageVaccine
     }
     public class VaccineCategoryErrorMessage
     {
-        public string Invalid { get; set; } = "O campo deve receber old,kid ou adult";
+        public string Invalid { get; set; } = "O campo deve receber old, kid ou adult";
         public string InvalidNullOrEmpty { get; set; } = "O campo informado não pode ser vazio ou nulo.";
     }
     public class VaccineDoseErrorMessage

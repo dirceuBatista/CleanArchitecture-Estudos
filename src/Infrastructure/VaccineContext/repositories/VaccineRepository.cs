@@ -12,15 +12,12 @@ public class VaccineRepository( AppDbContext context) : IVaccineRepository
     {
         return await context.Vaccines.AsNoTracking().AnyAsync(x => x.Index == index);
     }
-
     public async Task<Vaccine?> VaccineExistAsyncById(Guid id)
     {
         return await context.Vaccines.FirstOrDefaultAsync(c => c.Id == id);
 
     }
-  
     public async Task SaveAsync(Vaccine vaccine)
-    {
-        await context.Vaccines.AddAsync(vaccine);
-    }
+        =>await context.Vaccines.AddAsync(vaccine);
+    
 }

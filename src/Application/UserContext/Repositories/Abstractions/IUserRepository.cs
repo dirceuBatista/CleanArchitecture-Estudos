@@ -5,7 +5,7 @@ namespace Application.UserContext.Repositories.Abstractions;
 
 public interface IUserRepository
 {
-    Task<bool> CpfExistAsync(string email);
+    Task<bool> EmailExistAsync(string email);
     Task SaveAsync(User user);
 
     

@@ -8,13 +8,13 @@ public class User : Entity
 {
     public UserName Name { get;  } 
     public UserEmail Email { get;  } 
-    public string PasswordHash { get; } = string.Empty;
+    public string PasswordHash { get; } 
     public UserAge Age { get; } 
     public UserAllergy? Allergy { get; } 
-    public UserGender Gender { get;  } 
-    public UserCpf Cpf{ get;  } 
-    public UserSusNumber SusNumber { get;  } 
-    public VaccineCard  Card { get;  }
+    public UserGender Gender { get; } 
+    public UserCpf Cpf{ get; } 
+    public UserSusNumber? SusNumber { get; } 
+    public VaccineCard  Card { get; private set; }
     
 
     #region Constructor
@@ -23,7 +23,7 @@ public class User : Entity
     {
         
     }
-    private User(UserName name, UserEmail email,string password, UserAge age, UserAllergy allergy, UserGender gender,UserCpf cpf, UserSusNumber susNumber) : base(Guid.NewGuid())
+    private User(UserName name, UserEmail email,string password, UserAge age, UserAllergy? allergy, UserGender gender,UserCpf cpf, UserSusNumber? susNumber) : base(Guid.NewGuid())
     {
         Name = name;
         Email = email;
@@ -42,7 +42,7 @@ public class User : Entity
 
     public static User Create
     (UserName name, UserEmail email,
-        string password,UserAge age, UserAllergy? allergy, UserGender gender, UserCpf cpf, UserSusNumber susNumber)
+        string password,UserAge age, UserAllergy? allergy, UserGender gender, UserCpf cpf, UserSusNumber? susNumber)
     {
         return new User(name, email, password , age, allergy, gender, cpf, susNumber);
     }

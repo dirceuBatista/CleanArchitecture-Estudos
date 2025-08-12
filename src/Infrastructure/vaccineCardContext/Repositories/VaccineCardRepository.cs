@@ -7,11 +7,6 @@ namespace Infrastructure.vaccineCardContext.Repositories;
 
 public class VaccineCardRepository(AppDbContext context) : IVaccineCardRepository 
 {
-    public async Task<VaccineCard?> GetById(Guid id)
-    {
-        return await context.VaccineCards.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
-    }
-
     public async Task<VaccineCard?> GetByIdCard(Guid id)
     {
         return await context.VaccineCards.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
@@ -23,8 +18,7 @@ public class VaccineCardRepository(AppDbContext context) : IVaccineCardRepositor
     }
 
     public void UpdateAsync(VaccineCard vaccineCard)
-    {
-        context.VaccineCards.Update(vaccineCard);
+        => context.VaccineCards.Update(vaccineCard);
         
-    }
+    
 }

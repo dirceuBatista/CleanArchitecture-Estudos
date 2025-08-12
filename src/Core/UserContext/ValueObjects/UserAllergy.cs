@@ -7,17 +7,18 @@ namespace Core.UserContext.ValueObjects;
 
 public sealed record UserAllergy : ValueObject
 {
-    public bool Value { get; set; }
-    public string? Description { get; set; }
+    public bool Value { get; private set; }
+    public string? Description { get;  }
 
     #region Constants
 
     public const int Maxlength = 200;
 
     #endregion
+    
     #region Constructors
 
-    public UserAllergy()
+    private UserAllergy()
     {
         
     }
@@ -32,16 +33,47 @@ public sealed record UserAllergy : ValueObject
 
     #region Factory
 
-    public static UserAllergy Create(bool value , string description)
+    public static UserAllergy Create(string? description)
     {
-        if (description.Length > Maxlength)
-            throw new AllergyLengthException(ErrorMessage.Allergy.InvalidLength);
+        if (string.IsNullOrWhiteSpace(description))
+            return new UserAllergy(false, string.Empty);
         
-                
-        return new UserAllergy(value, description);
+        Validator(description);
+        
+        return new UserAllergy(true, description);
     }
 
     #endregion
 
+    #region Methods
+
+    private static void Validator(string? description)
+    {
+        if (description?.Length > Maxlength)
+            throw new AllergyLengthException(ErrorMessage.Allergy.InvalidLength);
+    }
+
+    #endregion
+    
+    #region Operators
+
+    public static implicit operator UserAllergy(string description)
+    {
+        return  UserAllergy.Create(description);
+    }
+    public static implicit operator string (UserAllergy allergy)
+    {
+        return allergy.ToString();
+    }
+    #endregion
+
+    #region Overrides
+
+    public override string ToString()
+    {
+        return  Description?? string.Empty;;
+    }
+
+    #endregion
    
 }
